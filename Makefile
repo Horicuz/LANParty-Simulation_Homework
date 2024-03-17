@@ -1,5 +1,5 @@
 all:
-	gcc test.c -o lanParty 
+	gcc main.c -o lanParty 
 
 clean:
 	rm -f lanParty

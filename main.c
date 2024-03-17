@@ -9,10 +9,7 @@ int main(int argc, char* argv[]) {
     output = fopen(argv[3], "w");
 
     //read from input1 and write to output
-    char c;
-    while((c = fgetc(input1)) != EOF) {
-        fputc(c, output);
-    }
+
 
 
     fclose(input1);
