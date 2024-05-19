@@ -8,6 +8,7 @@ struct Team
     char *name;
     int playerCount;
     PLAYER *players;
+    float teamPoints;
 };
 
 typedef struct Team TEAM;

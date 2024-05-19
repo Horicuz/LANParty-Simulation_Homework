@@ -52,14 +52,14 @@ void deleteNode(Node **head, TEAM v)
 	}
 }
 
-TEAM createTeam(FILE *file)
+TEAM createTeam(FILE *file) // read the team info from the file
 {
 	TEAM t;
 	char auxChar;
+	float teamPoints = 0;
 
 	fscanf(file, "%d", &t.playerCount);
 	t.players = (PLAYER *)malloc(t.playerCount * sizeof(PLAYER));
-
 	fscanf(file, "%c", &auxChar);
 
 	t.name = (char *)malloc(100 * sizeof(char));
@@ -67,14 +67,63 @@ TEAM createTeam(FILE *file)
 
 	for (int i = 0; i < t.playerCount; i++)
 	{
-
 		t.players[i].firstName = (char *)malloc(100 * sizeof(char));
 		t.players[i].secondName = (char *)malloc(100 * sizeof(char));
 
 		fscanf(file, "%s", t.players[i].firstName);
 		fscanf(file, "%s", t.players[i].secondName);
 		fscanf(file, "%d", &t.players[i].points);
+
+		teamPoints += (float)t.players[i].points;
 	}
 
+	teamPoints /= (float)t.playerCount;
+	t.teamPoints = teamPoints;
+
 	return t;
+}
+
+void deleteMin(Node **head) // delete the team with the lowest number of points
+{
+	if (*head == NULL)
+		return;
+	Node *headcopy = *head;
+	headcopy = headcopy->next;
+	Node *min = *head;
+	while (headcopy != NULL)
+	{
+		if (headcopy->val.teamPoints < min->val.teamPoints)
+		{
+			min = headcopy;
+		}
+		headcopy = headcopy->next;
+	}
+	deleteNode(head, min->val);
+}
+
+void printList(Node *head, FILE *output)
+{
+	Node *auxNode = head;
+	while (auxNode != NULL)
+	{
+		fprintf(output, "%s", auxNode->val.name);
+		auxNode = auxNode->next;
+	}
+}
+
+void freeMem(Node **head)
+{
+	while (*head != NULL)
+	{
+		Node *aux = *head;
+		*head = (*head)->next;
+		for (int j = 0; j < aux->val.playerCount; j++)
+		{
+			free(aux->val.players[j].firstName);
+			free(aux->val.players[j].secondName);
+		}
+		free(aux->val.players);
+		free(aux->val.name);
+		free(aux);
+	}
 }

@@ -16,3 +16,7 @@ void addAtEnd(Node **head, TEAM v);
 void deleteNode(Node **head, TEAM v);
 
 TEAM createTeam(FILE *file);
+
+void deleteMin(Node **head);
+void printList(Node *head, FILE *output);
+void freeMem(Node **head);

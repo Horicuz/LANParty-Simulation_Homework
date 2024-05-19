@@ -12,6 +12,13 @@ void checkFile(FILE *file)
     }
 }
 
+void closeFiles(FILE *input1, FILE *input2, FILE *output)
+{
+    fclose(input1);
+    fclose(input2);
+    fclose(output);
+}
+
 int main(int argc, char *argv[])
 {
     FILE *input1, *input2, *output; // c.in, d.in, out.out
@@ -27,6 +34,17 @@ int main(int argc, char *argv[])
     checkFile(input2);
     output = fopen(argv[3], "w");
     checkFile(output);
+
+    int task = 0;
+    for (int i = 0; i < 5; i++) // check what task the checker will run
+    {
+        int k;
+        fscanf(input1, "%d", &k);
+        if (k == 0)
+            break;
+        else
+            task++;
+    }
 
     int teamCount;
     fscanf(input2, "%d", &teamCount);
@@ -45,31 +63,31 @@ int main(int argc, char *argv[])
         addAtBeginning(&head, createTeam(input2)); // add the teams in the list
     }
 
-    Node *auxNode = head;
-
-    while (auxNode != NULL)
+    if (task == 1) // task 1
     {
-        fprintf(output, "%s", auxNode->val.name); // print the team name
-        auxNode = auxNode->next;
+        printList(head, output);
+        freeMem(&head);
+        closeFiles(input1, input2, output);
+        return 0;
     }
 
-    while (head != NULL) // free the memory
+    int remainingTeams = 1;
+    while (remainingTeams <= teamCount)
     {
-        Node *aux = head;
-        head = head->next;
-        for (int j = 0; j < aux->val.playerCount; j++)
-        {
-            free(aux->val.players[j].firstName);
-            free(aux->val.players[j].secondName);
-        }
-        free(aux->val.players);
-        free(aux->val.name);
-        free(aux);
+        remainingTeams *= 2; // determine the number of remaining teams
+    }
+    remainingTeams /= 2;
+
+    for (int i = 0; i < teamCount - remainingTeams; i++)
+    {
+        deleteMin(&head); // delete the team with the lowest average points
     }
 
-    fclose(input1); // close the files
-    fclose(input2);
-    fclose(output);
-
-    return 0;
+    if (task == 2) // task 2
+    {
+        printList(head, output);
+        freeMem(&head);
+        closeFiles(input1, input2, output);
+        return 0;
+    }
 }
