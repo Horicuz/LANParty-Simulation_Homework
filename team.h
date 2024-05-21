@@ -1,7 +1,5 @@
 #include "player.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#pragma once
 
 struct Team
 {
@@ -10,5 +8,13 @@ struct Team
     PLAYER *players;
     float teamPoints;
 };
+
+struct Node
+{
+    TEAM val;
+    struct Node *next;
+};
+
+typedef struct Node Node;
 
 typedef struct Team TEAM;

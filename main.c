@@ -1,23 +1,10 @@
+#include "cozi.h"
 #include "liste.h"
+#include "stive.h"
+#include "functions.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-void checkFile(FILE *file)
-{
-    if (file == NULL)
-    {
-        printf("Error opening file\n");
-        exit(1);
-    }
-}
-
-void closeFiles(FILE *input1, FILE *input2, FILE *output)
-{
-    fclose(input1);
-    fclose(input2);
-    fclose(output);
-}
 
 int main(int argc, char *argv[])
 {
@@ -60,7 +47,8 @@ int main(int argc, char *argv[])
     head->val = createTeam(input2);
     for (int i = 0; i < teamCount - 1; i++)
     {
-        addAtBeginning(&head, createTeam(input2)); // add the teams in the list
+        TEAM t = createTeam(input2);
+        addAtBeginning(&head, t); // add the teams in the list
     }
 
     if (task == 1) // task 1
@@ -83,6 +71,8 @@ int main(int argc, char *argv[])
         deleteMin(&head); // delete the team with the lowest average points
     }
 
+    printf("Remaining teams: %d\n", remainingTeams);
+
     if (task == 2) // task 2
     {
         printList(head, output);
@@ -90,4 +80,54 @@ int main(int argc, char *argv[])
         closeFiles(input1, input2, output);
         return 0;
     }
+
+    Node *aux = head;
+    Queue *q = createQueue(); // the queue of matches
+    while (aux != NULL)
+    {
+        MATCH m;
+        m.team1 = aux->val;
+        m.team2 = aux->next->val;
+        enQueue(q, m);
+        aux = aux->next->next;
+    }
+
+    Node *LoserStack = NULL;
+    Node *WinnerStack = NULL;
+
+    while (!isEmpty(q))
+    {
+        MATCH m = deQueue(q);
+        if (m.team1.teamPoints >= m.team2.teamPoints)
+        {
+            m.team1.teamPoints++;
+            push(&WinnerStack, m.team1);
+            push(&LoserStack, m.team2);
+        }
+        else
+        {
+            m.team2.teamPoints++;
+            push(&WinnerStack, m.team2);
+            push(&LoserStack, m.team1);
+        }
+    }
+
+    while (!isEmpty(&LoserStack))
+    {
+        pop(&LoserStack);
+    }
+
+    while (!isEmpty(&WinnerStack))
+    {
+        TEAM temp = pop(&WinnerStack);
+    }
+    // while (remainingTeams > 1)
+    // {
+    //     // sa faca meciurile
+    //     // sa bage castigatori la castigatori si pierzatori la pierzatori
+    //     // sa elimine piezatorii gen pop la toti
+    //     // sa faca meciurile din nou si tot asa
+    // }
+
+    return 0;
 }

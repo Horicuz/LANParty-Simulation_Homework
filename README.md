@@ -17,4 +17,6 @@ Am realizat setup-ul temei:
 -Dupa ce am adaugat o noua componenta in structura echipa (teamPoints), am creat o functie pentru determinarea si eliminarea echipei cu cele mai putine puncte din lista.  
 -Astfel am eliminat de mai multe ori din lista pana cand am ramas cu numarul de echipe dorit.  
 
-## TASK 3
+## TASK 3 ~ INCOMPLETE
+-Am adaugat stive.c si cozi.c pentru meciuri si pentru echipele castigatoare/pierzatoare
+-
