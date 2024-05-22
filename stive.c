@@ -16,27 +16,34 @@ void deleteStack(Node **top)
 	}
 }
 
-TEAM pop(Node **top)
+void pop(Node **top) // deletes the top element
 {
+	Node *temp;
 	if (isEmpty(*top))
 	{
 		printf("Stiva goala\n");
 		exit(1);
 	}
-	Node *temp = (*top);
-	TEAM aux = temp->val;
+	temp = *top;
 	*top = (*top)->next;
 	free(temp);
-	return aux;
+}
+
+Node *popMove(Node **top) // returns the node that was popped
+{
+	Node *temp;
+	if (isEmpty(*top))
+	{
+		printf("Stiva goala\n");
+		exit(1);
+	}
+	temp = *top;
+	*top = (*top)->next;
+	return temp;
 }
 
 void push(Node **top, Node *n)
 {
-	// Node *newNode = (Node *)malloc(sizeof(Node));
-	// newNode->val = v;
-	// newNode->next = *top;
-	// *top = newNode;
-
 	n->next = *top;
 	*top = n;
 }

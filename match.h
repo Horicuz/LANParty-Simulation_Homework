@@ -2,8 +2,8 @@
 
 struct Match
 {
-    TEAM team1;
-    TEAM team2;
+    Node *team1;
+    Node *team2;
 };
 
 typedef struct Match MATCH;

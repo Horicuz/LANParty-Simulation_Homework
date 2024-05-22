@@ -5,7 +5,7 @@
 
 struct MatchNode
 {
-    struct Match val;
+    MATCH val;
     struct MatchNode *next;
 };
 
