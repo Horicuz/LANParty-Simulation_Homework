@@ -20,6 +20,6 @@ struct Queue
 typedef struct Queue Queue;
 
 Queue *createQueue();
-int isEmpty(Queue *q);
+int isEmptyQ(Queue *q);
 MATCH deQueue(Queue *q);
 void enQueue(Queue *q, MATCH v);

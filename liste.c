@@ -61,9 +61,14 @@ TEAM createTeam(FILE *file) // read the team info from the file
 	fscanf(file, "%d", &t.playerCount);
 	t.players = (PLAYER *)malloc(t.playerCount * sizeof(PLAYER));
 	fscanf(file, "%c", &auxChar);
-
 	t.name = (char *)malloc(100 * sizeof(char));
-	fgets(t.name, 100, file);
+
+	while (fscanf(file, "%c", &auxChar) && auxChar != '\n')
+	{
+		t.name[strlen(t.name)] = auxChar;
+	}
+
+	t.name[strlen(t.name)] = '\0';
 
 	for (int i = 0; i < t.playerCount; i++)
 	{
@@ -106,7 +111,7 @@ void printList(Node *head, FILE *output)
 	Node *auxNode = head;
 	while (auxNode != NULL)
 	{
-		fprintf(output, "%s", auxNode->val.name);
+		fprintf(output, "%s\n", auxNode->val.name);
 		auxNode = auxNode->next;
 	}
 }

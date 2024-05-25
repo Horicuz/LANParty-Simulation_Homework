@@ -30,7 +30,7 @@ MATCH deQueue(Queue *q)
 {
 	MatchNode *aux;
 	MATCH d;
-	if (isEmpty(q))
+	if (isEmptyQ(q))
 	{
 		printf("Coada goala\n");
 		exit(1);
@@ -39,11 +39,10 @@ MATCH deQueue(Queue *q)
 	aux = q->front;
 	d = aux->val;
 	q->front = (q->front)->next;
-	free(aux);
 	return d;
 }
 
-int isEmpty(Queue *q)
+int isEmptyQ(Queue *q)
 {
 	return (q->front == NULL);
 }
@@ -51,7 +50,7 @@ int isEmpty(Queue *q)
 void deleteQueue(Queue *q)
 {
 	MatchNode *aux;
-	while (!isEmpty(q))
+	while (!isEmptyQ(q))
 	{
 		aux = q->front;
 		q->front = q->front->next;

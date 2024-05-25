@@ -9,6 +9,8 @@ struct Team
     float teamPoints;
 };
 
+typedef struct Team TEAM;
+
 struct Node
 {
     TEAM val;
@@ -16,5 +18,3 @@ struct Node
 };
 
 typedef struct Node Node;
-
-typedef struct Team TEAM;

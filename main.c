@@ -73,8 +73,6 @@ int main(int argc, char *argv[])
         deleteMin(&head); // delete the team with the lowest average points
     }
 
-    printf("Remaining teams: %d\n", remainingTeams);
-
     if (task == 2)
     {
         printList(head, output);
@@ -86,27 +84,36 @@ int main(int argc, char *argv[])
     // task 3
     printList(head, output);
     fprintf(output, "\n");
+    fprintf(output, "--- Round NO:1\n");
 
-    Node *aux = head;
+    Node *aux34 = head;
     int round = 1;
     Queue *q = createQueue(); // the queue of matches
 
-    while (aux != NULL)
+    while (aux34 != NULL)
     {
         MATCH m;
-        m.team1 = aux;
-        m.team2 = aux->next;
+        m.team1 = aux34;
+        m.team2 = aux34->next;
+        fprintf(output, "%s%s", m.team1->val.name, m.team2->val.name);
+        // for (int i = 1; i <= 33 - strlen(m.team1->val.name); i++)
+        //     fprintf(output, " ");
+        // fprintf(output, "-");
+        // for (int i = 1; i <= 33 - strlen(m.team2->val.name); i++)
+        //     fprintf(output, " ");
+        // fprintf(output, "%s\n", m.team2->val.name);
+
         enQueue(q, m);
-        aux = aux->next->next;
+        aux34 = aux34->next->next;
     }
 
     Node *LoserStack = NULL;
     Node *WinnerStack = NULL;
-
     Node *newHead; // the list with the last 8 teams
+
     while (remainingTeams > 1)
     {
-        while (!isEmpty(q))
+        while (!isEmptyQ(q))
         {
             MATCH m = deQueue(q);
             if (m.team1->val.teamPoints >= m.team2->val.teamPoints)
@@ -125,28 +132,37 @@ int main(int argc, char *argv[])
 
         deleteStack(&LoserStack);
         remainingTeams /= 2;
+        round++;
+        printf("--- Round NO:%d\n", round);
         if (remainingTeams == 8)
         {
+            while (!isEmpty(WinnerStack))
+            {
+                MATCH m;
+                Node *temp = popMove(&WinnerStack);
+                addAtBeginning(&newHead, temp->val);
+                m.team1 = temp;
+                fprintf(output, "%s ", m.team1->val.name);
+                printf("%f\n", m.team1->val.teamPoints);
+                temp = popMove(&WinnerStack);
+                addAtBeginning(&newHead, temp->val);
+                m.team2 = temp;
+                printf("%s%s", m.team1->val.name, m.team2->val.name);
+                enQueue(q, m);
+            }
             // create the list with the last 8 teams
         }
-
-        while (!isEmpty(&WinnerStack))
-        {
-            MATCH m;
-            Node *temp = popMove(&WinnerStack);
-            m.team1 = temp;
-            temp = popMove(&WinnerStack);
-            m.team2 = temp;
-            enQueue(q, m);
-        }
+        else
+            while (!isEmpty(WinnerStack))
+            {
+                MATCH m;
+                Node *temp = popMove(&WinnerStack);
+                m.team1 = temp;
+                temp = popMove(&WinnerStack);
+                m.team2 = temp;
+                enQueue(q, m);
+            }
     }
-    // while (remainingTeams > 1)
-    // {
-    //     // sa faca meciurile
-    //     // sa bage castigatori la castigatori si pierzatori la pierzatori
-    //     // sa elimine piezatorii gen pop la toti
-    //     // si sa arate castigatorii
-    // }
 
     return 0;
 }
