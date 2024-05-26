@@ -52,42 +52,6 @@ void deleteNode(Node **head, TEAM v)
 	}
 }
 
-TEAM createTeam(FILE *file) // read the team info from the file
-{
-	TEAM t;
-	char auxChar;
-	float teamPoints = 0;
-
-	fscanf(file, "%d", &t.playerCount);
-	t.players = (PLAYER *)malloc(t.playerCount * sizeof(PLAYER));
-	fscanf(file, "%c", &auxChar);
-	t.name = (char *)malloc(100 * sizeof(char));
-
-	while (fscanf(file, "%c", &auxChar) && auxChar != '\n')
-	{
-		t.name[strlen(t.name)] = auxChar;
-	}
-
-	t.name[strlen(t.name)] = '\0';
-
-	for (int i = 0; i < t.playerCount; i++)
-	{
-		t.players[i].firstName = (char *)malloc(100 * sizeof(char));
-		t.players[i].secondName = (char *)malloc(100 * sizeof(char));
-
-		fscanf(file, "%s", t.players[i].firstName);
-		fscanf(file, "%s", t.players[i].secondName);
-		fscanf(file, "%d", &t.players[i].points);
-
-		teamPoints += (float)t.players[i].points;
-	}
-
-	teamPoints /= (float)t.playerCount;
-	t.teamPoints = teamPoints;
-
-	return t;
-}
-
 void deleteMin(Node **head) // delete the team with the lowest number of points
 {
 	if (*head == NULL)

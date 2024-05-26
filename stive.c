@@ -16,17 +16,20 @@ void deleteStack(Node **top)
 	}
 }
 
-void pop(Node **top) // deletes the top element
+TEAM pop(Node **top) // deletes the top element
 {
 	Node *temp;
+	TEAM d;
 	if (isEmpty(*top))
 	{
 		printf("Stiva goala\n");
 		exit(1);
 	}
 	temp = *top;
+	d = temp->val;
 	*top = (*top)->next;
 	free(temp);
+	return d;
 }
 
 Node *popMove(Node **top) // returns the node that was popped

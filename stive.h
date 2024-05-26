@@ -5,7 +5,7 @@
 
 int isEmpty(Node *top);
 void deleteStack(Node **top);
-void pop(Node **top);
+TEAM pop(Node **top);
 Node *popMove(Node **top);
 void push(Node **top, Node *n);
 TEAM top(Node *top);

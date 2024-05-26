@@ -83,40 +83,32 @@ int main(int argc, char *argv[])
 
     // task 3
     printList(head, output);
-    fprintf(output, "\n");
-    fprintf(output, "--- Round NO:1\n");
 
-    Node *aux34 = head;
+    Node *aux = head;
     int round = 1;
     Queue *q = createQueue(); // the queue of matches
 
-    while (aux34 != NULL)
+    MATCH m;
+    while (aux != NULL) // create the first matches
     {
-        MATCH m;
-        m.team1 = aux34;
-        m.team2 = aux34->next;
-        fprintf(output, "%s%s", m.team1->val.name, m.team2->val.name);
-        // for (int i = 1; i <= 33 - strlen(m.team1->val.name); i++)
-        //     fprintf(output, " ");
-        // fprintf(output, "-");
-        // for (int i = 1; i <= 33 - strlen(m.team2->val.name); i++)
-        //     fprintf(output, " ");
-        // fprintf(output, "%s\n", m.team2->val.name);
-
+        m.team1 = aux;
+        m.team2 = aux->next;
         enQueue(q, m);
-        aux34 = aux34->next->next;
+        aux = aux->next->next;
     }
 
     Node *LoserStack = NULL;
     Node *WinnerStack = NULL;
-    Node *newHead; // the list with the last 8 teams
+    Node *newHead = NULL; // the list with the last 8 teams
 
     while (remainingTeams > 1)
     {
+        fprintf(output, "\n--- ROUND NO:%d\n", round);
         while (!isEmptyQ(q))
         {
-            MATCH m = deQueue(q);
-            if (m.team1->val.teamPoints >= m.team2->val.teamPoints)
+            m = deQueue(q);
+            printMatch(m, output);
+            if (m.team1->val.teamPoints > m.team2->val.teamPoints) // determine the winner and the loser
             {
                 (m.team1->val.teamPoints)++;
                 push(&WinnerStack, m.team1);
@@ -130,39 +122,57 @@ int main(int argc, char *argv[])
             }
         }
 
-        deleteStack(&LoserStack);
+        deleteStack(&LoserStack); // eliminate the losers
         remainingTeams /= 2;
-        round++;
-        printf("--- Round NO:%d\n", round);
-        if (remainingTeams == 8)
+        fprintf(output, "\nWINNERS OF ROUND NO:%d\n", round);
+
+        if (remainingTeams != 1)
         {
-            while (!isEmpty(WinnerStack))
+            round++;
+            if (remainingTeams == 8) // create the list with the last 8 teams
             {
-                MATCH m;
-                Node *temp = popMove(&WinnerStack);
-                addAtBeginning(&newHead, temp->val);
-                m.team1 = temp;
-                fprintf(output, "%s ", m.team1->val.name);
-                printf("%f\n", m.team1->val.teamPoints);
-                temp = popMove(&WinnerStack);
-                addAtBeginning(&newHead, temp->val);
-                m.team2 = temp;
-                printf("%s%s", m.team1->val.name, m.team2->val.name);
-                enQueue(q, m);
+                while (!isEmpty(WinnerStack)) // create the following matches with the winners
+                {
+                    ;
+                    m.team1 = popMove(&WinnerStack);
+                    printWinner(m, output, 1);
+                    m.team2 = popMove(&WinnerStack);
+                    printWinner(m, output, 2);
+                    enQueue(q, m);
+
+                    addAtBeginning(&newHead, m.team1->val);
+                    addAtBeginning(&newHead, m.team2->val);
+                }
             }
-            // create the list with the last 8 teams
+            else
+            {
+                while (!isEmpty(WinnerStack))
+                {
+                    m.team1 = popMove(&WinnerStack);
+                    printWinner(m, output, 1);
+                    m.team2 = popMove(&WinnerStack);
+                    printWinner(m, output, 2);
+                    enQueue(q, m);
+                }
+            }
         }
         else
-            while (!isEmpty(WinnerStack))
-            {
-                MATCH m;
-                Node *temp = popMove(&WinnerStack);
-                m.team1 = temp;
-                temp = popMove(&WinnerStack);
-                m.team2 = temp;
-                enQueue(q, m);
-            }
+        {
+            m.team1 = popMove(&WinnerStack);
+            printWinner(m, output, 1); // print the winner
+        }
     }
 
-    return 0;
+    if (task == 3)
+    {
+        freeMem(&newHead);
+        deleteStack(&WinnerStack);
+        deleteQueue(q);
+        closeFiles(input1, input2, output);
+        return 0;
+    }
+
+    // task 4
+    fprintf(output, "\n--- FINAL STAGE\n");
+    printList(newHead, output);
 }

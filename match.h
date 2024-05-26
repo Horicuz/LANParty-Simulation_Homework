@@ -1,4 +1,5 @@
 #include "team.h"
+#pragma once
 
 struct Match
 {

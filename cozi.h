@@ -23,3 +23,4 @@ Queue *createQueue();
 int isEmptyQ(Queue *q);
 MATCH deQueue(Queue *q);
 void enQueue(Queue *q, MATCH v);
+void deleteQueue(Queue *q);

@@ -2,6 +2,6 @@
 
 make
 
-./lanParty date/t8/c.in date/t8/d.in rez_test.out
+./lanParty date/t10/c.in date/t10/d.in rez_test.out
 
 make clean
