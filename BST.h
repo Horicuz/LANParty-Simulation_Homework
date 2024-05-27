@@ -14,3 +14,6 @@ typedef struct TreeNode TreeNode;
 
 TreeNode *newNode(TEAM team);
 TreeNode *insert(TreeNode *node, TEAM key);
+void printRevInorder(TreeNode *root, FILE *output);
+void printInorder(TreeNode *root, FILE *output);
+void freeBST(TreeNode **root);

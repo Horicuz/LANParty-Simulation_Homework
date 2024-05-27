@@ -126,15 +126,15 @@ int main(int argc, char *argv[])
         deleteStack(&LoserStack); // eliminate the losers
         remainingTeams /= 2;
         fprintf(output, "\nWINNERS OF ROUND NO:%d\n", round);
+        round++;
 
         if (remainingTeams != 1)
         {
-            round++;
+
             if (remainingTeams == 8) // create the list with the last 8 teams
             {
                 while (!isEmpty(WinnerStack)) // create the following matches with the winners
                 {
-                    ;
                     m.team1 = popMove(&WinnerStack);
                     printWinner(m, output, 1);
                     m.team2 = popMove(&WinnerStack);
@@ -153,36 +153,49 @@ int main(int argc, char *argv[])
                     printWinner(m, output, 1);
                     m.team2 = popMove(&WinnerStack);
                     printWinner(m, output, 2);
-                    enQueue(q, m);
+                    if (remainingTeams >= 2)
+                    {
+                        enQueue(q, m);
+                    }
                 }
             }
         }
         else
         {
-            m.team1 = popMove(&WinnerStack);
-            printWinner(m, output, 1); // print the winner
+            m.team1 = popMove(&WinnerStack); // print the winner
+            printWinner(m, output, 1);
+            free(m.team1);
         }
     }
+    deleteStack(&WinnerStack);
+    deleteQueue(q);
 
     if (task == 3)
     {
         freeMem(&newHead);
-        deleteStack(&WinnerStack);
-        deleteQueue(q);
         closeFiles(input1, input2, output);
         return 0;
     }
 
     // task 4
-    fprintf(output, "\n--- FINAL STAGE\n");
+    fprintf(output, "\nTOP 8 TEAMS:\n");
     Node *auxNode = newHead;
-    TreeNode *bst = newNode(auxNode->val); // create the binary search tree
+    TreeNode *bst = newNode(auxNode->val);
     auxNode = auxNode->next;
     while (auxNode != NULL)
     {
-        insertNode(&bst, auxNode->val);
+        insert(bst, auxNode->val);
         auxNode = auxNode->next;
     }
+    printRevInorder(bst, output); // print the teams in reverse inorder
 
-    printInorder(bst, output); // print the teams in the inorder traversal
+    if (task == 4)
+    {
+        freeMem(&newHead);
+        freeBST(&bst);
+        closeFiles(input1, input2, output);
+        return 0;
+    }
+
+    // task 5
 }

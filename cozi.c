@@ -39,6 +39,7 @@ MATCH deQueue(Queue *q)
 	aux = q->front;
 	d = aux->val;
 	q->front = (q->front)->next;
+	// free(aux);
 	return d;
 }
 
