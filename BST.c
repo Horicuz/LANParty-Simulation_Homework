@@ -7,7 +7,6 @@ TreeNode *newNode(TEAM team)
     temp->left = temp->right = NULL;
     return temp;
 }
-
 TreeNode *insert(TreeNode *node, TEAM key)
 {
     if (node == NULL)
@@ -21,6 +20,17 @@ TreeNode *insert(TreeNode *node, TEAM key)
     else if (strcmp(key.name, node->team.name) > 0)
         node->right = insert(node->right, key);
     return node;
+}
+
+void insertListInBST(Node *head, TreeNode **bst)
+{
+    while (head != NULL)
+    {
+        *bst = insert(*bst, head->val);
+        Node *aux = head;
+        head = head->next;
+        free(aux);
+    }
 }
 
 void printRevInorder(TreeNode *root, FILE *output)
@@ -57,4 +67,14 @@ void freeBST(TreeNode **root)
     freeBST(&(*root)->right);
     free(*root);
     *root = NULL;
+}
+
+void AddAVLRevInorder(TreeNode *root, AVLNode **headAVL)
+{
+    if (root != NULL)
+    {
+        AddAVLRevInorder(root->right, headAVL);
+        *headAVL = insertAVL(*headAVL, root->team);
+        AddAVLRevInorder(root->left, headAVL);
+    }
 }

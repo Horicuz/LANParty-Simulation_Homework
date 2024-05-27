@@ -28,4 +28,15 @@ Am realizat setup-ul temei:
 -De asemenea cand ultimile 8 echipe sunt aflate, creez o lista noua unde le voi adauga pe acestea pentru taskul 4. Aici eu fac copie la fiecare dintre cele 8 noduri, alocand memorie, pentru ca mai departe in competitie acestea ar fi fost altfel eliberate.  
 -Diferite functii  precum printMatch, printWinner, isLetterOrNumber(Task 3), createTeam, etc.. au fost adaugate in fisierul functions.c si apelurile acestora in functions.h, pentru a modulariza programul.  
 
-## TASK 4 ~ INCOMPLETE
+## TASK 4 ~ COMPLETE
+-Din lista anterior creata am introdus nodurile intr-un Binary Search Tree, eliminand lista pe masura parcurgerii acesteia.  
+-Dupa ce am ramas doar cu BST, m-am folosit de proprietatiile acestuia pentru a afisa in ordine descrescatoare topul celor 8 echipe (Functia de Print Reverse Inorder).  
+-Functiile utilizate se afla in BST.h.  
+
+## TASK 5 ~ COMPLETE
+-Folosind-ma doar de BST-ul anterior creat, l-am parcurs in aceeasi ordine (reverse inorder) si am creat un AVL (Georgy Adelson – Velsky si Evgenii Landis)cu elementele din BST.  
+-Acest tip de arbore (AVL) este unul ce se echilibreaza pe masura ce se introduc elemente noi in acesta (self-balancing), functiile de citire din BST si inserare in AVL, impreuna cu echilibrarile aferente (R, L, RL, LR) se regasesc in AVL.h.  
+-La final, am afisat elementele aflate pe nivelul 2 al arborelui.  
+
+## INFO
+-La finalul fiecarui task am eliberat memoria utilizata pana acel moment.  

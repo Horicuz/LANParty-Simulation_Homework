@@ -3,6 +3,7 @@
 #include "stive.h"
 #include "functions.h"
 #include "BST.h"
+#include "AVL.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -179,23 +180,25 @@ int main(int argc, char *argv[])
 
     // task 4
     fprintf(output, "\nTOP 8 TEAMS:\n");
-    Node *auxNode = newHead;
-    TreeNode *bst = newNode(auxNode->val);
-    auxNode = auxNode->next;
-    while (auxNode != NULL)
-    {
-        insert(bst, auxNode->val);
-        auxNode = auxNode->next;
-    }
-    printRevInorder(bst, output); // print the teams in reverse inorder
+    TreeNode *bst = NULL;
+    insertListInBST(newHead, &bst); // create the BST with the last 8 teams while freeing the list
+    printRevInorder(bst, output);   // print the teams in reverse inorder
 
     if (task == 4)
     {
-        freeMem(&newHead);
         freeBST(&bst);
         closeFiles(input1, input2, output);
         return 0;
     }
 
     // task 5
+    AVLNode *AVL = NULL;
+    AddAVLRevInorder(bst, &AVL); // add the teams in the AVL tree based on the BST created
+    fprintf(output, "\nTHE LEVEL 2 TEAMS ARE:\n");
+    printLevel(AVL, 2, output); // print the AVL tree
+
+    freeBST(&bst);
+    freeAVL(&AVL);
+    closeFiles(input1, input2, output);
+    return 0;
 }
