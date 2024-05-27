@@ -2,6 +2,7 @@
 #include "liste.h"
 #include "stive.h"
 #include "functions.h"
+#include "BST.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -174,5 +175,14 @@ int main(int argc, char *argv[])
 
     // task 4
     fprintf(output, "\n--- FINAL STAGE\n");
-    printList(newHead, output);
+    Node *auxNode = newHead;
+    TreeNode *bst = newNode(auxNode->val); // create the binary search tree
+    auxNode = auxNode->next;
+    while (auxNode != NULL)
+    {
+        insertNode(&bst, auxNode->val);
+        auxNode = auxNode->next;
+    }
+
+    printInorder(bst, output); // print the teams in the inorder traversal
 }
