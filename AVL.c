@@ -5,7 +5,7 @@ int max(int a, int b)
     return (a > b) ? a : b;
 }
 
-int nodeHeight(AVLNode *headAVL)
+int nodeHeight(AVLNode *headAVL) // inaltimea unui nod
 {
     if (headAVL == NULL)
         return -1;
@@ -13,7 +13,7 @@ int nodeHeight(AVLNode *headAVL)
         return headAVL->height;
 }
 
-AVLNode *RightRotation(AVLNode *z)
+AVLNode *RightRotation(AVLNode *z) // rotatie dreapta
 {
     AVLNode *y = z->left;
     AVLNode *T3 = y->right;
@@ -25,7 +25,7 @@ AVLNode *RightRotation(AVLNode *z)
     return y; // new root
 }
 
-AVLNode *LeftRotation(AVLNode *z)
+AVLNode *LeftRotation(AVLNode *z) // rotatie stanga
 {
     AVLNode *y = z->right;
     AVLNode *T2 = y->left;
@@ -37,7 +37,7 @@ AVLNode *LeftRotation(AVLNode *z)
     return y; // new root
 }
 
-AVLNode *insertAVL(AVLNode *headAVL, TEAM val)
+AVLNode *insertAVL(AVLNode *headAVL, TEAM val) // inserare in AVL
 {
     if (headAVL == NULL)
     {
@@ -56,6 +56,7 @@ AVLNode *insertAVL(AVLNode *headAVL, TEAM val)
         headAVL->left = insertAVL(headAVL->left, val);
     else if (strcmp(val.name, headAVL->val.name) > 0)
         headAVL->right = insertAVL(headAVL->right, val);
+
     headAVL->height = 1 + max(nodeHeight(headAVL->left), nodeHeight(headAVL->right));
     int balance = nodeHeight(headAVL->left) - nodeHeight(headAVL->right);
     // Left Left
@@ -84,7 +85,7 @@ AVLNode *insertAVL(AVLNode *headAVL, TEAM val)
     return headAVL;
 }
 
-void printLevel(AVLNode *headAVL, int level, FILE *output)
+void printLevel(AVLNode *headAVL, int level, FILE *output) // afisare pe nivel
 {
     if (headAVL == NULL)
         return;
@@ -99,7 +100,7 @@ void printLevel(AVLNode *headAVL, int level, FILE *output)
     }
 }
 
-void freeAVL(AVLNode **headAVL)
+void freeAVL(AVLNode **headAVL) // eliberare memorie
 {
     if (*headAVL == NULL)
         return;
@@ -109,7 +110,7 @@ void freeAVL(AVLNode **headAVL)
     *headAVL = NULL;
 }
 
-void printAVLonLevels(AVLNode *headAVL, FILE *output)
+void printAVLonLevels(AVLNode *headAVL, FILE *output) // afisare AVL pe nivele
 {
     int h = nodeHeight(headAVL);
     for (int i = 1; i <= h + 1; i++)

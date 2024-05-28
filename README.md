@@ -40,3 +40,5 @@ Am realizat setup-ul temei:
 
 ## INFO
 -La finalul fiecarui task am eliberat memoria utilizata pana acel moment.  
+-Se afla in codul meu si un script "run.sh" si un fisier rez_test.out pe care le-am folosit pentru a testa mai rapid codul modificat pe anumite teste doar.  
+-Structurile mele sunt player.h team.h match.h, iar functions.c contine diverse functii ce nu se afla neaparat intr-o anumita categorie(cozi, bst, avl), dar care sunt utilizate de mai multe ori si ajuta la modularizarea programului.  

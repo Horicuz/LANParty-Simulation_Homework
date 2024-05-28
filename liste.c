@@ -1,6 +1,6 @@
 #include "liste.h"
 
-void addAtBeginning(Node **head, TEAM v)
+void addAtBeginning(Node **head, TEAM v) // add a team at the beginning of the list
 {
 	Node *newNode = (Node *)malloc(sizeof(Node));
 	newNode->val = v;
@@ -8,7 +8,7 @@ void addAtBeginning(Node **head, TEAM v)
 	*head = newNode;
 }
 
-void addAtEnd(Node **head, TEAM v)
+void addAtEnd(Node **head, TEAM v) // add a team at the end of the list
 {
 	Node *aux = *head;
 	Node *newNode = (Node *)malloc(sizeof(Node));
@@ -24,7 +24,7 @@ void addAtEnd(Node **head, TEAM v)
 	}
 }
 
-void deleteNode(Node **head, TEAM v)
+void deleteNode(Node **head, TEAM v) // delete a team from the list
 {
 	if (*head == NULL)
 		return;
@@ -70,7 +70,7 @@ void deleteMin(Node **head) // delete the team with the lowest number of points
 	deleteNode(head, min->val);
 }
 
-void printList(Node *head, FILE *output)
+void printList(Node *head, FILE *output) // print the list
 {
 	Node *auxNode = head;
 	while (auxNode != NULL)
@@ -80,7 +80,7 @@ void printList(Node *head, FILE *output)
 	}
 }
 
-void freeMem(Node **head)
+void freeMem(Node **head) // free the memory
 {
 	while (*head != NULL)
 	{

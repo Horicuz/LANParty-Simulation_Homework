@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void checkFile(FILE *file)
+void checkFile(FILE *file) // check if the file is opened
 {
     if (file == NULL)
     {
@@ -9,14 +9,14 @@ void checkFile(FILE *file)
     }
 }
 
-void closeFiles(FILE *input1, FILE *input2, FILE *output)
+void closeFiles(FILE *input1, FILE *input2, FILE *output) // close the files
 {
     fclose(input1);
     fclose(input2);
     fclose(output);
 }
 
-int isLetterOrNumber(char c)
+int isLetterOrNumber(char c) // check if a character is a letter or a number
 {
     if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9'))
         return 1;
@@ -68,7 +68,7 @@ TEAM createTeam(FILE *file) // read the team info from the file
     return t;
 }
 
-void printMatch(MATCH m, FILE *output)
+void printMatch(MATCH m, FILE *output) // print the match
 {
     fprintf(output, "%s", m.team1->val.name);
     for (int i = 1; i <= 33 - strlen(m.team1->val.name); i++)
@@ -79,7 +79,7 @@ void printMatch(MATCH m, FILE *output)
     fprintf(output, "%s\n", m.team2->val.name);
 }
 
-void printWinner(MATCH m, FILE *output, int x)
+void printWinner(MATCH m, FILE *output, int x) // print the winner of the match
 {
     if (x == 1)
     {

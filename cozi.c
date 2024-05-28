@@ -1,6 +1,6 @@
 #include "cozi.h"
 
-Queue *createQueue()
+Queue *createQueue() // creare coada
 {
 	Queue *q;
 	q = (Queue *)malloc(sizeof(Queue));
@@ -10,7 +10,7 @@ Queue *createQueue()
 	return q;
 }
 
-void enQueue(Queue *q, MATCH v)
+void enQueue(Queue *q, MATCH v) // adaugare in coada
 {
 	MatchNode *newNode = (MatchNode *)malloc(sizeof(MatchNode));
 	newNode->val = v;
@@ -26,7 +26,7 @@ void enQueue(Queue *q, MATCH v)
 		q->front = q->rear;
 }
 
-MATCH deQueue(Queue *q)
+MATCH deQueue(Queue *q) // extragere din coada
 {
 	MatchNode *aux;
 	MATCH d;
@@ -39,16 +39,15 @@ MATCH deQueue(Queue *q)
 	aux = q->front;
 	d = aux->val;
 	q->front = (q->front)->next;
-	// free(aux);
 	return d;
 }
 
-int isEmptyQ(Queue *q)
+int isEmptyQ(Queue *q) // verificare coada goala
 {
 	return (q->front == NULL);
 }
 
-void deleteQueue(Queue *q)
+void deleteQueue(Queue *q) // stergere coada
 {
 	MatchNode *aux;
 	while (!isEmptyQ(q))

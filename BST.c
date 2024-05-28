@@ -1,13 +1,14 @@
 #include "BST.h"
 
-TreeNode *newNode(TEAM team)
+TreeNode *newNode(TEAM team) // creare nod
 {
     TreeNode *temp = (TreeNode *)malloc(sizeof(TreeNode));
     temp->team = team;
     temp->left = temp->right = NULL;
     return temp;
 }
-TreeNode *insert(TreeNode *node, TEAM key)
+
+TreeNode *insert(TreeNode *node, TEAM key) // inserare in BST
 {
     if (node == NULL)
         return newNode(key);
@@ -22,7 +23,7 @@ TreeNode *insert(TreeNode *node, TEAM key)
     return node;
 }
 
-void insertListInBST(Node *head, TreeNode **bst)
+void insertListInBST(Node *head, TreeNode **bst) // inserare lista in BST
 {
     while (head != NULL)
     {
@@ -33,7 +34,7 @@ void insertListInBST(Node *head, TreeNode **bst)
     }
 }
 
-void printRevInorder(TreeNode *root, FILE *output)
+void printRevInorder(TreeNode *root, FILE *output) // afisare in ordine inversa
 {
     if (root != NULL)
     {
@@ -46,7 +47,7 @@ void printRevInorder(TreeNode *root, FILE *output)
     }
 }
 
-void printInorder(TreeNode *root, FILE *output)
+void printInorder(TreeNode *root, FILE *output) // afisare in ordine
 {
     if (root != NULL)
     {
@@ -59,7 +60,7 @@ void printInorder(TreeNode *root, FILE *output)
     }
 }
 
-void freeBST(TreeNode **root)
+void freeBST(TreeNode **root) // eliberare memorie BST
 {
     if (*root == NULL)
         return;
@@ -69,7 +70,7 @@ void freeBST(TreeNode **root)
     *root = NULL;
 }
 
-void AddAVLRevInorder(TreeNode *root, AVLNode **headAVL)
+void AddAVLRevInorder(TreeNode *root, AVLNode **headAVL) // adaugare in AVL in ordine inversa
 {
     if (root != NULL)
     {

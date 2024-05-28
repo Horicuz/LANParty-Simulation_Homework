@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
         addAtBeginning(&head, t); // add the teams in the list
     }
 
-    if (task == 1)
+    if (task == 1) // end of task 1
     {
         printList(head, output);
         freeMem(&head);
@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
         deleteMin(&head); // delete the team with the lowest average points
     }
 
-    if (task == 2)
+    if (task == 2) // end of task 2
     {
         printList(head, output);
         freeMem(&head);
@@ -91,7 +91,7 @@ int main(int argc, char *argv[])
     Queue *q = createQueue(); // the queue of matches
 
     MATCH m;
-    while (aux != NULL) // create the first matches
+    while (aux != NULL) // create the first matches based on the list
     {
         m.team1 = aux;
         m.team2 = aux->next;
@@ -99,9 +99,9 @@ int main(int argc, char *argv[])
         aux = aux->next->next;
     }
 
-    Node *LoserStack = NULL;
-    Node *WinnerStack = NULL;
-    Node *newHead = NULL; // the list with the last 8 teams
+    Node *LoserStack = NULL;  // the stack with the losers
+    Node *WinnerStack = NULL; // the stack with the winners
+    Node *newHead = NULL;     // the list with the last 8 teams
 
     while (remainingTeams > 1)
     {
@@ -112,7 +112,7 @@ int main(int argc, char *argv[])
             printMatch(m, output);
             if (m.team1->val.teamPoints > m.team2->val.teamPoints) // determine the winner and the loser
             {
-                (m.team1->val.teamPoints)++;
+                (m.team1->val.teamPoints)++; // increase the points of the winner
                 push(&WinnerStack, m.team1);
                 push(&LoserStack, m.team2);
             }
@@ -161,7 +161,7 @@ int main(int argc, char *argv[])
                 }
             }
         }
-        else
+        else // print the winner of the last round
         {
             m.team1 = popMove(&WinnerStack); // print the winner
             printWinner(m, output, 1);
@@ -171,7 +171,7 @@ int main(int argc, char *argv[])
     deleteStack(&WinnerStack);
     deleteQueue(q);
 
-    if (task == 3)
+    if (task == 3) // end of task 3
     {
         freeMem(&newHead);
         closeFiles(input1, input2, output);
