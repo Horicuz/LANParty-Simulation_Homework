@@ -1,44 +1,100 @@
-# LANParty Simulation in C ~ TEMA 1 PROIECTAREA ALGORITIMILOR
+# LANParty Simulation ~ PROJECT 1: ALGORITHM DESIGN
 
 ## Setup ~ COMPLETE
-Am realizat setup-ul temei:
+The setup for the project has been completed as follows:
 
--Am setat folderul cu fisierele de intrare/iesire  
--Am creat un fisier .c si unul Makefile pentru a verifica functionalitatea checker-ului  
+- Created the project folder containing the necessary input/output files and test scripts.  
+- Added a `Makefile` to simplify the compilation process and ensure compatibility with the checker.  
 
 ## TASK 1 ~ COMPLETE
--Am efectuat citirea din fisier de intrare (d.in), creand o lista simplu inlantuita cu echipele participante la LanParty.  
--Pentru acest lucru am creat un header cu apelurile functiilor pentru liste, si inca doua headere pentru declararea structurilor pentru echipa (TEAM) si jucatori (PLAYER).  
--Elementele, adica echipele, au fost adaugate la inceputul listei (O(1)), iar acestea reprezinta structuri de date (declarate in team.h) ce contin: Numele echipei, Numarul de jucatori din echipa, si un vector (alocat dinamic) cu acestia.  
--La randul lui, vectorul contine structuri de date cu informatii despre jucatori (player.h) : firstname , secondname si punctaj.  
+- Parsed the input file (`date/d.in`) to create a singly linked list of participating teams.  
+- Each team was represented as a struct containing the following:
+  - Team name
+  - Number of players
+  - Dynamically allocated array of player structs, containing player names and scores.  
+- Teams were inserted at the beginning of the list for O(1) complexity.  
+- Modularized the implementation using headers for lists, teams, and players, facilitating code reusability.  
 
 ## TASK 2 ~ COMPLETE
--Am determinat numarul de echipe (putere a lui 2)ce trebuie sa ramana in competitie.  
--Dupa ce am adaugat o noua componenta in structura echipa (teamPoints), am creat o functie pentru determinarea si eliminarea echipei cu cele mai putine puncte din lista.  
--Astfel am eliminat de mai multe ori din lista pana cand am ramas cu numarul de echipe dorit.  
+- Calculated the number of teams required to meet the next power of 2 constraint.
+- Added a `teamPoints` component to the team struct, which was used to identify and remove the weakest teams.  
+- Iteratively eliminated teams until the required number of teams was reached.  
 
 ## TASK 3 ~ COMPLETE
--Am adaugat stive.c si cozi.c pentru meciuri si pentru echipele castigatoare/pierzatoare.  
--Am creat o coada pentru meciuri, unde Matchnodurile/elementele au ca si valoare o structura de tip MATCH ce contine team1 si team2 adica 2 noduri din lista initiala. (Se refera la aceleasi noduri nu am luat valoarea acestora si le-am duplicat).  
--Dupa crearea cozii cu ajutorul functiei enQueue, am verificat in cadrul fiecarui meci, nodul castigator si cel pierzator.  
--Nodurile pierzatoarea sunt adaugate (push) intr-o stiva separata de cea de invigatori unde, evident, sunt adaugate in aceeasi maniera nodurile castigatoare
--Dupa terminarea meciurilor dintr-o runda, stiva de pierzatori este golita (DeleteStack).  
--Din stiva invingatorilor dau PopMove pentru toate elemtele sale. Aceasta procedura imi scoate nodul din stiva fara al elibera (free), pentru a-l putea adauga din nou in coada de meciuri impreuna cu adversarul sau (enQueue din nou)
--Efectuez aceste operatii pana la aflarea castigatorului, afisand pe ecran meciurile si castigatorii fiecarei runde.  
--De asemenea cand ultimile 8 echipe sunt aflate, creez o lista noua unde le voi adauga pe acestea pentru taskul 4. Aici eu fac copie la fiecare dintre cele 8 noduri, alocand memorie, pentru ca mai departe in competitie acestea ar fi fost altfel eliberate.  
--Diferite functii  precum printMatch, printWinner, isLetterOrNumber(Task 3), createTeam, etc.. au fost adaugate in fisierul functions.c si apelurile acestora in functions.h, pentru a modulariza programul.  
+- Implemented a queue-based simulation of matches:
+  - Used a match queue, where each match contained two teams.
+  - Winners and losers of each match were stored in separate stacks.  
+- After each round:
+  - Cleared the losers' stack.
+  - Transferred winners from the winners' stack back to the match queue.  
+- Preserved the last eight teams in a separate list for the next tasks.  
 
 ## TASK 4 ~ COMPLETE
--Din lista anterior creata am introdus nodurile intr-un Binary Search Tree, eliminand lista pe masura parcurgerii acesteia.  
--Dupa ce am ramas doar cu BST, m-am folosit de proprietatiile acestuia pentru a afisa in ordine descrescatoare topul celor 8 echipe (Functia de Print Reverse Inorder).  
--Functiile utilizate se afla in BST.h.  
+- Constructed a Binary Search Tree (BST) from the final eight teams, inserting them in such a way that the tree facilitated ranking in descending order.  
+- Displayed the top 8 teams in descending order using reverse inorder traversal.  
 
 ## TASK 5 ~ COMPLETE
--Folosind-ma doar de BST-ul anterior creat, l-am parcurs in aceeasi ordine (reverse inorder) si am creat un AVL (Georgy Adelson – Velsky si Evgenii Landis)cu elementele din BST.  
--Acest tip de arbore (AVL) este unul ce se echilibreaza pe masura ce se introduc elemente noi in acesta (self-balancing), functiile de citire din BST si inserare in AVL, impreuna cu echilibrarile aferente (R, L, RL, LR) se regasesc in AVL.h.  
--La final, am afisat elementele aflate pe nivelul 2 al arborelui.  
+- Converted the BST to an AVL tree, ensuring it was balanced:
+  - Implemented rotations (left, right, left-right, right-left) to maintain the height-balance property.  
+  - Used the AVL tree to display nodes on level 2, as required.  
 
-## INFO
--La finalul fiecarui task am eliberat memoria utilizata pana acel moment.  
--Se afla in codul meu si un script "run.sh" si un fisier rez_test.out pe care le-am folosit pentru a testa mai rapid codul modificat pe anumite teste doar.  
--Structurile mele sunt player.h team.h match.h, iar functions.c contine diverse functii ce nu se afla neaparat intr-o anumita categorie(cozi, bst, avl), dar care sunt utilizate de mai multe ori si ajuta la modularizarea programului.  
+## Additional Information
+- Memory for dynamically allocated structures (lists, stacks, queues, trees) was freed after usage.  
+- Included additional utility scripts (`checker.sh`) for automated testing.  
+- Modularized the program by placing general-purpose functions in `functions.c` and `functions.h`.  
+
+---
+
+## How to Run
+
+1. **Clone the Repository**  
+   Clone the project repository to your local machine:
+   ```bash
+   git clone https://github.com/Horicuz/LANParty-Simulation_Homework.git
+   ```
+
+2. **Navigate to the Project Directory**  
+   Change the directory to the project folder:
+   ```bash
+   cd LANParty-Simulation_Homework
+   ```
+
+3. **Setup the Project**  
+   Ensure the project folder contains the input files, output files, and the checker script. Verify the presence of the `Makefile`.
+
+4. **Compile the Code**  
+   Use the provided Makefile to compile the project:
+   ```bash
+   make
+   ```
+
+5. **Run the Checker**  
+   Execute the checker script with the appropriate input file:
+   ```bash
+   ./checker.sh date/d.in out/output_file
+   ```
+   Replace `output_file` with the desired output file name.
+
+6. **Inspect Results**  
+   - Results, such as the final rankings, will be saved in the output directory or displayed in the terminal, depending on the implementation.
+   - Outputs can be cross-verified using the checker script.
+
+7. **Clean Up**  
+   To remove compiled files and binaries, use:
+   ```bash
+   make clean
+   ```
+
+8. **Additional Notes for Beginners**  
+   - Install `gcc` and `make` on your system before proceeding.
+   - If you encounter permission issues with `checker.sh`, grant execute permissions:
+     ```bash
+     chmod +x checker.sh
+     ```
+   - Maintain the directory structure specified in the repository to avoid file path errors.
+
+---
+
+### Notes
+- Input files must be formatted as described in the problem requirements.
+- Adjust implementations in `functions.c` and queue operations to handle edge cases as needed.
